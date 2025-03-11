@@ -26,7 +26,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)&&other.CompareTag("Recogible"))
         {
             if(objectInHand != null)
             {

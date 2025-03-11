@@ -15,10 +15,17 @@ public class PlayerController : MonoBehaviour
 
     private bool canAttack;
 
+     public float distance;
+    public Transform raycastPos;
+    public LayerMask raycastMask;
+    public float offset;
+    Rigidbody rb;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         canAttack = true;
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -66,6 +73,25 @@ public class PlayerController : MonoBehaviour
         //Animación del personaje
         animator.SetBool("moving", moving);
         
+        RaycastHit hit;
+        if (Physics.Raycast(raycastPos.position, Vector3.down, out hit, distance, raycastMask))
+        {
+            transform.position = hit.point + Vector3.up * offset;
+
+            if (rb.useGravity == true)
+            {
+                rb.useGravity = false;
+
+                rb.linearVelocity = Vector3.zero;
+            }
+        }
+        else 
+        {
+            if (rb.useGravity == false)
+            {
+                rb.useGravity = true;
+            }
+        }
     }
 
     public void AttackEneded()
