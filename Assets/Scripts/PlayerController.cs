@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -21,6 +22,10 @@ public class PlayerController : MonoBehaviour
     public float offset;
     Rigidbody rb;
 
+    public int vidaPlayer;
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,6 +36,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //vida del personaje
+        if (vidaPlayer <= 0)
+        {
+            Debug.Log("GameOver");
+        }
         //movimiento del personaje
 
         moving = false;
@@ -92,11 +102,34 @@ public class PlayerController : MonoBehaviour
                 rb.useGravity = true;
             }
         }
+
+        
     }
 
     public void AttackEneded()
     {
         canAttack = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+
+        if (collision.gameObject.CompareTag("arma"))
+        {
+            print("funciona");
+            vidas -= 1;
+        }
+
+        
+        if (vidas == 0)
+        {
+            MuerteJugador.Invoke(this, EventArgs.Empty);
+        }
+
+        
+
+     
     }
 
 }
