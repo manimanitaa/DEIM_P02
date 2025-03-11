@@ -24,6 +24,8 @@ public class BOSS_CONTROLER : MonoBehaviour
     public int damage;
     public GameObject Player;
 
+    public Collider collider;
+
     public float distancia_caminar = 10;
     private void Start()
     {
@@ -122,11 +124,5 @@ public class BOSS_CONTROLER : MonoBehaviour
         RandomTargetLoc = transform.position + new Vector3(RadiusTargetLoc.x, 0, RadiusTargetLoc.y);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            Player.GetComponent<PlayerController>().vidaPlayer -= damage;
-        }
-    }
+   
 }
