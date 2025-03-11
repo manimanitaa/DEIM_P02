@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
 
     public int vidaPlayer;
-
+    public Slider vidaVisual;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //vida del personaje
+
+        vidaVisual.GetComponent<Slider>().value = vidaPlayer;
         if (vidaPlayer <= 0)
         {
             Debug.Log("GameOver");
@@ -111,25 +114,6 @@ public class PlayerController : MonoBehaviour
         canAttack = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-
-        if (collision.gameObject.CompareTag("arma"))
-        {
-            print("funciona");
-            vidas -= 1;
-        }
-
-        
-        if (vidas == 0)
-        {
-            MuerteJugador.Invoke(this, EventArgs.Empty);
-        }
-
-        
-
-     
-    }
+    
 
 }
