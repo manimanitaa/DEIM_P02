@@ -31,15 +31,16 @@ public class Camera_follow : MonoBehaviour
         Vector3 position=follow.position;
         Vector3 center=position+direction*(camera.nearClipPlane+0.1f);
 
-        Vector3 right = transform.right*nearPlaneSize.x;
+        Vector3 right = transform.right * nearPlaneSize.x;
+        Vector3 up = transform.up * nearPlaneSize.y;
 
         return new Vector3[]
         {
-            center,
-            center,
-            center,
-            center,
-        }
+            center -right + up,
+            center+right+up,
+            center-right-up,
+            center+right -up,
+        };
     }
 
     private void Update()
@@ -71,14 +72,19 @@ public class Camera_follow : MonoBehaviour
 
         RaycastHit hit;
         float distance=maxDistance;
-        GetCameraCollisionPoints(direction);
+        Vector3[] points = GetCameraCollisionPoints(direction);
 
-        if(Physics.Raycast(follow.position,direction,out hit, maxDistance))
+        foreach (Vector3 point in points)
         {
-            distance = (hit.point - follow.position).magnitude;
+            if (Physics.Raycast(follow.position, direction, out hit, maxDistance))
+            {
+                distance = Mathf.Min((hit.point - follow.position).magnitude);
+            }
         }
 
-        transform.position = follow.position +direction*distance;
-        transform.rotation = Quaternion.LookRotation(follow.position-transform.position);
+
+        transform.position = follow.position + direction * distance;
+        transform.rotation = Quaternion.LookRotation(follow.position - transform.position);
     }
 }
+
