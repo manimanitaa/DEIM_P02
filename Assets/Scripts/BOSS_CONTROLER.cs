@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BOSS_CONTROLER : MonoBehaviour
 {
@@ -24,7 +25,10 @@ public class BOSS_CONTROLER : MonoBehaviour
     public int damage;
     public GameObject Player;
 
-    public Collider collider;
+    
+
+    public int vidaPlayer;
+    public Slider vidaVisual;
 
     public float distancia_caminar = 10;
     private void Start()
@@ -38,6 +42,8 @@ public class BOSS_CONTROLER : MonoBehaviour
         if (Vector3.Distance(transform.position, target.transform.position) > radio_vision )
         {
             ani.SetBool("run", false);
+            ani.SetBool("attack", false);
+            atacando = false;
             cronometro += 1 * Time.deltaTime;
             if (cronometro >=2)
             {
@@ -76,13 +82,16 @@ public class BOSS_CONTROLER : MonoBehaviour
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
 
-            agent.enabled = true;
-            agent.SetDestination(target.transform.position);
+            
 
-            if(Vector3.Distance(transform.position,target.transform.position)> distancia_ataque && atacando)
+            if(Vector3.Distance(transform.position,target.transform.position)> distancia_ataque)
             {
-              ani.SetBool("walk", true);
-              ani.SetBool("run", false);
+                agent.enabled = true;
+                agent.SetDestination(target.transform.position);
+                ani.SetBool("walk", false);
+                ani.SetBool("run", true);
+                ani.SetBool("attack", false);
+                atacando = false;
             }
             else
             {
@@ -91,14 +100,14 @@ public class BOSS_CONTROLER : MonoBehaviour
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 3);
                     ani.SetBool("walk", false);
                     ani.SetBool("run", false);
+                    ani.SetBool("attack", true);
+                    atacando = true;
+                    print("ataca");
+                    agent.enabled = false;
+                
                 }
             }
             
-        }
-
-        if (atacando)
-        {
-            agent.enabled = false;
         }
 
     }
@@ -114,6 +123,13 @@ public class BOSS_CONTROLER : MonoBehaviour
 
     private void Update()
     {
+        //vida del personaje
+
+        vidaVisual.GetComponent<Slider>().value = vidaPlayer;
+        if (vidaPlayer <= 0)
+        {
+            Debug.Log("GameOver");
+        }
         Comportamiento_Enemigo();
     }
 

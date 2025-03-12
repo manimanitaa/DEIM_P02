@@ -106,6 +106,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (!Input.anyKey)
+        {
+            rb.angularVelocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
+        }
+
         
     }
 
