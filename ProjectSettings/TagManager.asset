@@ -8,6 +8,7 @@ TagManager:
   - Libro
   - Recogible
   - arma
+  - Enemigo
   layers:
   - Default
   - TransparentFX

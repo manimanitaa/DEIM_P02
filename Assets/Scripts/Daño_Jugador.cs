@@ -12,7 +12,7 @@ public class Daño_Jugador : MonoBehaviour
         print("test");
         if (collider.gameObject.tag == "Enemigo")
         {
-
+            print("muereeee");
             pc.vidaPlayer -= damage;
         }
     }

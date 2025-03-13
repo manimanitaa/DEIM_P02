@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController1 : MonoBehaviour
 {
 
-    [SerializeField] private float speed;
+    [SerializeField] private float speed= 10;
 
     [SerializeField] private Transform playerPointer;
 
@@ -26,8 +26,6 @@ public class PlayerController : MonoBehaviour
     public int vidaPlayer;
     public Slider vidaVisual;
 
-    public event EventHandler MuerteJugador;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,32 +44,13 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("GameOver");
         }
-        //movimiento del personaje
+        //Nuevo movimiento del personaje
+        float horInput = Input.GetAxisRaw("Horizontal") * speed;
+        float verInput = Input.GetAxisRaw("Vertical") * speed;
 
-        moving = false;
-        if (Input.GetKey(KeyCode.W))
-        {
-            moving = true;
-            transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
-        } 
-        else if (Input.GetKey(KeyCode.S))
-        {
-            moving = true;
-            transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
-        }
+        rb.linearVelocity= new Vector3 (horInput,0,verInput);
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            moving = true;
-            transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
-        }
-        else if(Input.GetKey(KeyCode.A))
-        {
-            moving = true;
-            transform.Translate(Vector3.left* speed * Time.deltaTime, Space.World);
-        }
-
-        transform.forward = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        transform.forward= new Vector3(rb.linearVelocity.x,0,rb.linearVelocity.z);
 
         //Ataque del personaje
         if (canAttack &&(Input.GetMouseButtonDown(0)))
@@ -90,31 +69,33 @@ public class PlayerController : MonoBehaviour
         //Animación del personaje
         animator.SetBool("moving", moving);
         
-        RaycastHit hit;
-        if (Physics.Raycast(raycastPos.position, Vector3.down, out hit, distance, raycastMask))
-        {
-            transform.position = hit.point + Vector3.up * offset;
 
-            if (rb.useGravity == true)
-            {
-                rb.useGravity = false;
+        //Suve las escaleras
+        //RaycastHit hit;
+        //if (Physics.Raycast(raycastPos.position, Vector3.down, out hit, distance, raycastMask))
+        //{
+        //    transform.position = hit.point + Vector3.up * offset;
 
-                rb.linearVelocity = Vector3.zero;
-            }
-        }
-        else 
-        {
-            if (rb.useGravity == false)
-            {
-                rb.useGravity = true;
-            }
-        }
+        //    if (rb.useGravity == true)
+        //    {
+        //        rb.useGravity = false;
 
-        if (!Input.anyKey)
-        {
-            rb.angularVelocity = Vector3.zero;
-            rb.linearVelocity = Vector3.zero;
-        }
+        //        rb.linearVelocity = Vector3.zero;
+        //    }
+        //}
+        //else 
+        //{
+        //    if (rb.useGravity == false)
+        //    {
+        //        rb.useGravity = true;
+        //    }
+        //}
+
+        //if (!Input.anyKey)
+        //{
+        //    rb.angularVelocity = Vector3.zero;
+        //    rb.linearVelocity = Vector3.zero;
+        //}
 
         
     }

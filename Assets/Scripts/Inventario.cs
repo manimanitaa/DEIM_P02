@@ -13,9 +13,14 @@ public class PlayerInventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))    //suelta el objeto
         {
-            objectInHand.transform.SetParent(null);
-             objectInHand.GetComponent<Collider>().enabled = true;
-            objectInHand.GetComponent<Rigidbody>().useGravity = true;
+            if (objectInHand != null)
+            {
+                objectInHand.transform.SetParent(null);
+                objectInHand.GetComponent<Collider>().enabled = true;
+                objectInHand.GetComponent<Rigidbody>().useGravity = true;
+                objectInHand.GetComponent<Rigidbody>().isKinematic = false;
+            }
+                
 
             foreach (Collider c in objectInHand.GetComponents<Collider>())   //activa todos los collider
             {
@@ -48,6 +53,7 @@ public class PlayerInventory : MonoBehaviour
             objectInHand = other.gameObject;
             //objectInHand.GetComponent<Collider>().enabled = false;
             objectInHand.GetComponent<Rigidbody>().useGravity = false;
+            objectInHand.GetComponent <Rigidbody>().isKinematic = true;
 
 
             foreach(Collider c in objectInHand.GetComponents<Collider>())   //desactiva todos los collider
