@@ -25,7 +25,7 @@ public class BOSS_CONTROLER : MonoBehaviour
     public int damage;
     public GameObject Player;
 
-    
+    PlayerController1 jugador;
 
     public int vidaPlayer;
     public Slider vidaVisual;
@@ -103,6 +103,7 @@ public class BOSS_CONTROLER : MonoBehaviour
                     ani.SetBool("attack", true);
                     atacando = true;
                     print("ataca");
+                    jugador.vidaPlayer -= damage;
                     agent.enabled = false;
                 
                 }
@@ -129,6 +130,8 @@ public class BOSS_CONTROLER : MonoBehaviour
         if (vidaPlayer <= 0)
         {
             Debug.Log("GameOver");
+            
+            ani.SetBool("muerte",true);
         }
         Comportamiento_Enemigo();
     }

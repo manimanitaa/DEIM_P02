@@ -9,6 +9,7 @@ TagManager:
   - Recogible
   - arma
   - Enemigo
+  - moneda
   layers:
   - Default
   - TransparentFX

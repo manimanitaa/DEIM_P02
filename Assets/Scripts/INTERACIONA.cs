@@ -19,7 +19,6 @@ public class InteractWithObject : MonoBehaviour
     {
         // Comprobar la distancia entre el jugador y el objeto
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        print(distanceToPlayer);
         // Si el jugador está cerca y presiona "E"
         if (distanceToPlayer <= interactionDistance)
         {
